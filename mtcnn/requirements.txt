@@ -1,0 +1,2 @@
+conda install pytorch torchvision cudatoolkit=10.1
+conda install numpy pandas opencv-python 
