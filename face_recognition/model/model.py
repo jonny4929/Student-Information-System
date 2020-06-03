@@ -133,7 +133,7 @@ class SSH(nn.Module):
 class SSH_vgg16base(nn.Module):
     def __init__(self):
         super(SSH_vgg16base,self).__init__()
-        vgg=models.vgg16(pretrained=True)
+        vgg=models.vgg16(pretrained=False)
         self.layer1=vgg.features[:23]
         self.layer2=vgg.features[23:30]
         self.pool=vgg.features[30]
@@ -495,7 +495,7 @@ def _smooth_l1_loss(bbox_pred, bbox_targets, bbox_inside_weights, bbox_outside_w
 class Rnet(nn.Module):
     def __init__(self):
         super(Rnet,self).__init__()
-        vgg=models.vgg16(pretrained=True)
+        vgg=models.vgg16(pretrained=False)
         self.layer=vgg.features
         self.classifer=vgg.classifier[:-1]
         self.fc=nn.Sequential(
@@ -521,7 +521,7 @@ class Rnet(nn.Module):
 class Onet(nn.Module):
     def __init__(self):
         super(Onet,self).__init__()
-        vgg=models.vgg16(pretrained=True)
+        vgg=models.vgg16(pretrained=False)
         self.layer=vgg.features
         self.layer[-1]=nn.MaxPool2d(2,2,ceil_mode=True)
         self.classifier=nn.Sequential(
@@ -543,7 +543,7 @@ class Onet(nn.Module):
 class Rnet_v2(nn.Module):
     def __init__(self):
         super(Rnet_v2,self).__init__()
-        n=models.vgg16(pretrained=True)
+        n=models.vgg16(pretrained=False)
         self.layer=n.features[:-1]
         self.classifier=nn.Sequential(
             nn.Linear(512*6*7,1024),
@@ -566,7 +566,7 @@ class Rnet_v2(nn.Module):
 class Facenet(nn.Module):
     def __init__(self,classnum):
         super(Facenet,self).__init__()
-        self.vgg=models.vgg16(pretrained=True).features
+        self.vgg=models.vgg16(pretrained=False).features
         self.vgg[-1]=nn.MaxPool2d(2,2,ceil_mode=True)
         for param in self.vgg.parameters():
             param.requires_grad=False
@@ -592,7 +592,7 @@ class Facenet(nn.Module):
 class resnet50(nn.Module):
     def __init__(self,classnum):
         super(resnet50,self).__init__()
-        self.res=models.resnet50(pretrained=True)
+        self.res=models.resnet50(pretrained=False)
         self.res.fc=nn.Sequential(
             nn.Linear(2048,512),
             nn.ReLU(),
