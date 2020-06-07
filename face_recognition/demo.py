@@ -14,10 +14,10 @@ torch.set_default_tensor_type(torch.FloatTensor)
 
 net=SSH()
 device=torch.device('cuda:0')
-net.load_state_dict(torch.load('./pretrained_model/SSH_v5.pth'))
+net.load_state_dict(torch.load('./pretrained_model/SSH.pth'))
 net=net.to(device).eval() 
 
-img=cv2.imread("./pic/2.jpg")
+img=cv2.imread("./pic/.jpg")
 img=cv2.resize(img,(1600,1200))
 transform= transforms.Compose(
             [transforms.ToTensor(),
@@ -35,9 +35,8 @@ arg_nms=NMS(x[0][arg],0.2)
 mat=x[0][arg][arg_nms]
 onet=Onet()
 rnet=Rnet_v2()
-device=torch.device('cuda:0')
-onet.load_state_dict(torch.load('./pretrained_model/Onet_v5.pth'))
-rnet.load_state_dict(torch.load('./pretrained_model/newRnet_v3.pth'))
+onet.load_state_dict(torch.load('./pretrained_model/Onet.pth'))
+rnet.load_state_dict(torch.load('./pretrained_model/newRnet.pth'))
 rnet=rnet.to(device).eval()
 onet=onet.to(device).eval()
 imagetensor=torch.zeros(mat.shape[0],3,112,96)
@@ -80,7 +79,7 @@ for m in range(mat.shape[0]):
     imgtensor[m]=transform(image)
     cv2.imwrite('./img_done/'+str(m)+'.jpg',image)
 facenet=resnet50(10)
-facenet.res.load_state_dict(torch.load('pretrained_model/feature_v7.pth'))
+facenet.res.load_state_dict(torch.load('pretrained_model/feature.pth'))
 facenet=facenet.res
 facenet.eval()
 facenet=facenet.to(device)
